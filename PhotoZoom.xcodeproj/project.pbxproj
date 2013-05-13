@@ -16,7 +16,6 @@
 		269FEE28163C714600EB8347 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE26163C714600EB8347 /* InfoPlist.strings */; };
 		269FEE2A163C714600EB8347 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE29163C714600EB8347 /* main.m */; };
 		269FEE2E163C714600EB8347 /* PZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE2D163C714600EB8347 /* PZAppDelegate.m */; };
-		269FEE37163C714600EB8347 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE35163C714600EB8347 /* MainStoryboard.storyboard */; };
 		269FEE3A163C714600EB8347 /* PZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE39163C714600EB8347 /* PZViewController.m */; };
 		269FEE42163C714600EB8347 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE41163C714600EB8347 /* SenTestingKit.framework */; };
 		269FEE43163C714600EB8347 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1D163C714600EB8347 /* UIKit.framework */; };
@@ -57,7 +56,6 @@
 		269FEE2B163C714600EB8347 /* PhotoZoom-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoZoom-Prefix.pch"; sourceTree = "<group>"; };
 		269FEE2C163C714600EB8347 /* PZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PZAppDelegate.h; sourceTree = "<group>"; };
 		269FEE2D163C714600EB8347 /* PZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PZAppDelegate.m; sourceTree = "<group>"; };
-		269FEE36163C714600EB8347 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		269FEE38163C714600EB8347 /* PZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PZViewController.h; sourceTree = "<group>"; };
 		269FEE39163C714600EB8347 /* PZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PZViewController.m; sourceTree = "<group>"; };
 		269FEE40163C714600EB8347 /* PhotoZoomTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoZoomTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,16 +136,12 @@
 		269FEE23163C714600EB8347 /* PhotoZoom */ = {
 			isa = PBXGroup;
 			children = (
+				3856260C173CCD2D0071D4F8 /* PZPagingScrollView */,
 				269FEE24163C714600EB8347 /* Supporting Files */,
 				269FEE2C163C714600EB8347 /* PZAppDelegate.h */,
 				269FEE2D163C714600EB8347 /* PZAppDelegate.m */,
-				269FEE35163C714600EB8347 /* MainStoryboard.storyboard */,
 				269FEE38163C714600EB8347 /* PZViewController.h */,
 				269FEE39163C714600EB8347 /* PZViewController.m */,
-				269FEE63163CA97800EB8347 /* PZPhotoView.h */,
-				269FEE64163CA97800EB8347 /* PZPhotoView.m */,
-				266ED20D164DE24600FAC72C /* PZPagingScrollView.h */,
-				266ED20E164DE24600FAC72C /* PZPagingScrollView.m */,
 				26FD6CCF17397451007310A6 /* PZPhotosDataSource.h */,
 				26FD6CD017397451007310A6 /* PZPhotosDataSource.m */,
 			);
@@ -188,6 +182,17 @@
 				269FEE4A163C714600EB8347 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3856260C173CCD2D0071D4F8 /* PZPagingScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				269FEE63163CA97800EB8347 /* PZPhotoView.h */,
+				269FEE64163CA97800EB8347 /* PZPhotoView.m */,
+				266ED20D164DE24600FAC72C /* PZPagingScrollView.h */,
+				266ED20E164DE24600FAC72C /* PZPagingScrollView.m */,
+			);
+			name = PZPagingScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,7 +268,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				269FEE28163C714600EB8347 /* InfoPlist.strings in Resources */,
-				269FEE37163C714600EB8347 /* MainStoryboard.storyboard in Resources */,
 				260DCAD7164184C1000C27CD /* Box.png in Resources */,
 				26FD6CCA173959EF007310A6 /* Default.png in Resources */,
 				26FD6CCB173959EF007310A6 /* Default@2x.png in Resources */,
@@ -338,14 +342,6 @@
 				269FEE27163C714600EB8347 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		269FEE35163C714600EB8347 /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				269FEE36163C714600EB8347 /* en */,
-			);
-			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		269FEE4A163C714600EB8347 /* InfoPlist.strings */ = {

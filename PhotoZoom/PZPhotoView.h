@@ -13,7 +13,8 @@
 @interface PZPhotoView : UIScrollView
 
 @property (assign, nonatomic) id<PZPhotoViewDelegate> photoViewDelegate;
-
+@property (weak, nonatomic) UIImageView *imageView;
+@property (assign, nonatomic) NSInteger padding;
 - (void)prepareForReuse;
 - (void)displayImage:(UIImage *)image;
 

@@ -12,7 +12,7 @@
 
 @interface PZPhotoView () <UIScrollViewDelegate>
 
-@property (weak, nonatomic) UIImageView *imageView;
+
 @property (weak, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -37,7 +37,7 @@
 - (void)setupView {
     self.delegate = self;
     self.imageView = nil;
-    
+    self.padding = 0;
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.bouncesZoom = TRUE;
@@ -76,7 +76,7 @@
         else
             frameToCenter.origin.y = 0;
 
-        self.imageView.frame = frameToCenter;
+        //self.imageView.frame = frameToCenter;
         
         CGPoint contentOffset = self.contentOffset;
         
@@ -114,6 +114,7 @@
 
 - (void)prepareForReuse {
     // start by dropping any views and resetting the key properties
+    
     if (self.imageView != nil) {
         for (UIGestureRecognizer *gestureRecognizer in self.imageView.gestureRecognizers) {
             [self.imageView removeGestureRecognizer:gestureRecognizer];
@@ -131,10 +132,13 @@
     NSAssert(self.photoViewDelegate != nil, @"Invalid State");
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.userInteractionEnabled = TRUE;
     [self addSubview:imageView];
     self.imageView = imageView;
-    
+    CGRect frame = self.imageView.frame;
+    frame.origin.x += (self.padding/2);
+    self.imageView.frame = frame;
     // add gesture recognizers to the image view
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
@@ -155,7 +159,7 @@
     [self.imageView addGestureRecognizer:doubleTwoFingerTap];
     
     self.contentSize = self.imageView.frame.size;
-    
+    //NSLog(@"%@",self.imageView);
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
 }
@@ -318,7 +322,7 @@
     
     if (self.imageView.bounds.size.width > 0.0 && self.imageView.bounds.size.height > 0.0) {
         // calculate min/max zoomscale
-        CGFloat xScale = boundsSize.width  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
+        CGFloat xScale = (boundsSize.width - self.padding)  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
         CGFloat yScale = boundsSize.height / self.imageView.bounds.size.height;   // the scale needed to perfectly fit the image height-wise
         
         minScale = MIN(xScale, yScale);

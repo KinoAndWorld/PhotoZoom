@@ -8,19 +8,18 @@
 
 #import "PZViewController.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-
 #import "PZPagingScrollView.h"
 #import "PZPhotoView.h"
 #import "PZPhotosDataSource.h"
-//#import "PZImagePalette.h"
+
+#define PADDING 20
 
 @interface PZViewController () <PZPagingScrollViewDelegate, PZPhotoViewDelegate, UIScrollViewDelegate>
 
 @property (readonly) NSArray *customToolbarItems;
 
 @property (strong, nonatomic) PZPhotosDataSource *photosDataSource;
-@property (weak, nonatomic) IBOutlet PZPagingScrollView *pagingScrollView;
+@property (strong, nonatomic) PZPagingScrollView *pagingScrollView;
 
 @end
 
@@ -33,6 +32,11 @@
     [super viewDidLoad];
     
     self.photosDataSource = [[PZPhotosDataSource alloc] init];
+    
+    self.pagingScrollView = [[PZPagingScrollView alloc] initWithFrame:self.view.bounds andPadding:PADDING];
+    self.pagingScrollView.pagingViewDelegate = self;
+    [self.view addSubview:self.pagingScrollView];
+    [self.pagingScrollView displayPagingViewAtIndex:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -52,13 +56,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         self.pagingScrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     });
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    // resetDisplay will set the content size and position the frames (not ideal to do it this way)
-    [self.pagingScrollView resetDisplay];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -136,7 +133,6 @@
 - (void)toggleFullScreen {    
     if (self.navigationController.navigationBar.alpha == 0.0) {
         // fade in navigation
-        
         [UIView animateWithDuration:0.4 animations:^{
             [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
             self.navigationController.navigationBar.alpha = 1.0;
@@ -146,7 +142,6 @@
     }
     else {
         // fade out navigation
-        
         [UIView animateWithDuration:0.4 animations:^{
             [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
             self.navigationController.navigationBar.alpha = 0.0;
@@ -207,7 +202,7 @@
     return self.photosDataSource.count;
 }
 
-- (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index {
+- (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index{
     PZPhotoView *photoView = [[PZPhotoView alloc] initWithFrame:self.view.bounds];
     photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     photoView.photoViewDelegate = self;
@@ -220,6 +215,7 @@
     NSAssert(index < self.photosDataSource.count, @"Invalid State");
     
     PZPhotoView *photoView = (PZPhotoView *)pageView;
+    photoView.padding = PADDING;
     [photoView startWaiting];
     [self.photosDataSource photoForIndex:index withCompletionBlock:^(UIImage *photo, NSError *error) {
         [photoView stopWaiting];

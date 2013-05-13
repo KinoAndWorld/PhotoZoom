@@ -25,6 +25,16 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.padding = 0;
+        [self setupView];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame andPadding:(NSInteger)padding{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.padding = padding;
         [self setupView];
     }
     return self;
@@ -44,7 +54,7 @@
     
     // it is very important to auto resize
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
+    self.bounds = [self frameForPagingScrollView];
     self.recycledPages = [[NSMutableSet alloc] init];
     self.visiblePages  = [[NSMutableSet alloc] init];
 }
@@ -63,12 +73,11 @@
 #pragma mark - Calculations for Size and Positioning
 #pragma mark -
 
-#define PADDING  4
+//#define PADDING 20
 
 - (CGRect)frameForPagingScrollView {
     CGRect frame = [[UIScreen mainScreen] bounds];
-    frame.origin.x -= PADDING;
-    frame.size.width += (2 * PADDING);
+    frame.size.width += self.padding;
     return frame;
 }
 
@@ -78,8 +87,7 @@
     // view, so its frame is in window coordinate space, which is never rotated. Its bounds, however, will be in landscape
     // because it has a rotation transform applied.
     CGRect pageFrame = self.bounds;
-    pageFrame.size.width -= (2 * PADDING);
-    pageFrame.origin.x = (self.bounds.size.width * index) + PADDING;
+    pageFrame.origin.x = self.bounds.size.width * index;
     return pageFrame;
 }
 

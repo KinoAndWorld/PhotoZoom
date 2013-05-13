@@ -12,10 +12,12 @@
 
 @interface PZPagingScrollView : UIScrollView
 
-@property (assign, nonatomic) IBOutlet id<PZPagingScrollViewDelegate>pagingViewDelegate;
+@property (assign, nonatomic) id<PZPagingScrollViewDelegate>pagingViewDelegate;
 @property (readonly) UIView *visiblePageView;
 @property (assign) BOOL suspendTiling;
+@property (assign, nonatomic) NSInteger padding;
 
+- (id)initWithFrame:(CGRect)frame andPadding:(NSInteger)padding;
 - (void)displayPagingViewAtIndex:(NSUInteger)index;
 - (void)resetDisplay;
 
